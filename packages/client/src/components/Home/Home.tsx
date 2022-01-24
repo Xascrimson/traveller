@@ -1,16 +1,16 @@
-import { Container, Heading, VStack } from '@chakra-ui/react'
-import { FC, useEffect } from 'react'
-import React, { useState } from 'react'
-import FormInput from '../FormInput/FormInput'
-import getAddress from '../../data/queries/getAddress'
 import { useLazyQuery } from '@apollo/client'
+import { Container, Heading, Spinner, Table, VStack } from '@chakra-ui/react'
+import React, { FC, useEffect, useState } from 'react'
+import getAddress from '../../data/queries/getAddress'
+import FormInput from '../FormInput/FormInput'
+import FormTable from '../FormTable/FormTable'
 
 export const Home: FC = () => {
   const [address, setAddress] = useState()
   const [queryAddress, { loading, error, data }] = useLazyQuery(getAddress)
 
   const handleSubmit = (e: any) => {
-    setAddress(e.target[0].value)
+    // setAddress(e.target[0].value)
     queryAddress({
       variables: {
         filter: {
@@ -18,21 +18,20 @@ export const Home: FC = () => {
         },
       },
     })
-
     e.preventDefault()
   }
 
-  useEffect(() => {
-    if (data) {
-      console.log('data', data)
-    }
-  }, [data])
+  if (error) {
+    return <p>an error has occured</p>
+  }
 
   return (
     <VStack spacing="8">
       <Heading as="h1">Smart traveller</Heading>
       <Container maxW="container.md">
         <FormInput onSubmit={handleSubmit} />
+        <br/>
+        {loading ? <Spinner /> : <FormTable data={data?.cities.cities} total={data?.cities.total} />}
       </Container>
     </VStack>
   )
