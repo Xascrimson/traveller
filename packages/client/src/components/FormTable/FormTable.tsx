@@ -28,7 +28,6 @@ const FormTable: React.FC<FormTableProps> = ({ data, total }) => {
       <Tbody>
         {data &&
           data.map((city: Cities) => {
-            console.log(city)
             return (
               <Tr>
                 <Td>{city.name}</Td>
@@ -42,16 +41,6 @@ const FormTable: React.FC<FormTableProps> = ({ data, total }) => {
       </Tbody>
     </Table>
   )
-  //   return (
-  //     <form onSubmit={onSubmit}>
-  //       <InputGroup>
-  //         <Input id="address"/>
-  //         <InputRightElement>
-  //           <IconButton aria-label="" type="submit" icon={<Search2Icon />} />
-  //         </InputRightElement>
-  //       </InputGroup>
-  //     </form>
-  //   )
 }
 
 export default FormTable
