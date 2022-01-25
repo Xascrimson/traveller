@@ -1,6 +1,6 @@
 import { useLazyQuery } from '@apollo/client'
-import { Container, Heading, Spinner, Table, VStack } from '@chakra-ui/react'
-import React, { FC, useEffect, useState } from 'react'
+import { Container, Heading, Spinner, VStack } from '@chakra-ui/react'
+import React, { FC, useState } from 'react'
 import getAddress from '../../data/queries/getAddress'
 import FormInput from '../FormInput/FormInput'
 import FormTable from '../FormTable/FormTable'
@@ -30,7 +30,7 @@ export const Home: FC = () => {
       <Heading as="h1">Smart traveller</Heading>
       <Container maxW="container.md">
         <FormInput onSubmit={handleSubmit} />
-        <br/>
+        <br />
         {loading ? <Spinner /> : <FormTable data={data?.cities.cities} total={data?.cities.total} />}
       </Container>
     </VStack>
