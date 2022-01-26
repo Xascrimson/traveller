@@ -1,5 +1,7 @@
-import { Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react'
+import { useMutation } from '@apollo/client'
+import { Button, Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react'
 import React from 'react'
+import mutateAddress from '../../data/mutations/mutateAddress'
 
 type FormTableProps = {
   data: [Cities] | null
@@ -13,7 +15,42 @@ type Cities = {
   wishlist: boolean
 }
 
+type CityDetails = {
+  id: number
+  visited?: boolean
+  wishlist?: boolean
+}
+type MutationProps = {
+  detail: CityDetails
+  selection: 'visited' | 'wishlist'
+  updateAddress: (arg0: any) => void
+}
+
+export function mutateDetails({ detail, selection, updateAddress }: MutationProps) {
+  if (selection == 'visited') {
+    updateAddress({
+      variables: {
+        input: {
+          id: detail.id,
+          visited: !detail.visited,
+        },
+      },
+    })
+  } else {
+    updateAddress({
+      variables: {
+        input: {
+          id: detail.id,
+          wishlist: !detail.wishlist,
+        },
+      },
+    })
+  }
+}
+
 const FormTable: React.FC<FormTableProps> = ({ data, total }) => {
+  const [updateAddress] = useMutation(mutateAddress)
+
   return (
     <>
       <Table>
@@ -34,8 +71,32 @@ const FormTable: React.FC<FormTableProps> = ({ data, total }) => {
                   <Td>{city.name}</Td>
                   <Td>{city.country}</Td>
                   <Td>{city.id}</Td>
-                  <Td>{JSON.stringify(city.visited)}</Td>
-                  <Td>{JSON.stringify(city.wishlist)}</Td>
+                  <Td>
+                    <Button
+                      onClick={() =>
+                        mutateDetails({
+                          detail: { id: city.id, visited: city.visited },
+                          selection: 'visited',
+                          updateAddress,
+                        })
+                      }
+                    >
+                      {JSON.stringify(city.visited)}
+                    </Button>
+                  </Td>
+                  <Td>
+                    <Button
+                      onClick={() =>
+                        mutateDetails({
+                          detail: { id: city.id, wishlist: city.wishlist },
+                          selection: 'wishlist',
+                          updateAddress,
+                        })
+                      }
+                    >
+                      {JSON.stringify(city.wishlist)}
+                    </Button>
+                  </Td>
                 </Tr>
               )
             })}

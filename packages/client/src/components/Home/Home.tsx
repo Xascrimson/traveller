@@ -6,11 +6,9 @@ import FormInput from '../FormInput/FormInput'
 import FormTable from '../FormTable/FormTable'
 
 export const Home: FC = () => {
-  const [address, setAddress] = useState()
   const [queryAddress, { loading, error, data }] = useLazyQuery(getAddress)
 
   const handleSubmit = (e: any) => {
-    // setAddress(e.target[0].value)
     queryAddress({
       variables: {
         filter: {
