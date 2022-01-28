@@ -27,6 +27,7 @@ type MutationProps = {
 }
 
 export function mutateDetails({ detail, selection, updateAddress }: MutationProps) {
+  console.log('luine30', detail, selection)
   if (selection == 'visited') {
     updateAddress({
       variables: {
@@ -73,6 +74,7 @@ const FormTable: React.FC<FormTableProps> = ({ data, total }) => {
                   <Td>{city.id}</Td>
                   <Td>
                     <Button
+                      data-testid="visited-test"
                       onClick={() =>
                         mutateDetails({
                           detail: { id: city.id, visited: city.visited },
@@ -86,6 +88,7 @@ const FormTable: React.FC<FormTableProps> = ({ data, total }) => {
                   </Td>
                   <Td>
                     <Button
+                      data-testid="wishlist-test"
                       onClick={() =>
                         mutateDetails({
                           detail: { id: city.id, wishlist: city.wishlist },

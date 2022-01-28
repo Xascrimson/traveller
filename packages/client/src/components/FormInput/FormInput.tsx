@@ -11,9 +11,9 @@ const FormInput: React.FC<FormProps> = ({ onSubmit }) => {
   return (
     <form onSubmit={onSubmit}>
       <InputGroup>
-        <Input id="address"/>
+        <Input data-testid="inputAddress"/>
         <InputRightElement>
-          <IconButton aria-label="" type="submit" icon={<Search2Icon />} />
+          <IconButton aria-label="" data-testid="submitButton" type="submit" icon={<Search2Icon />} />
         </InputRightElement>
       </InputGroup>
     </form>
